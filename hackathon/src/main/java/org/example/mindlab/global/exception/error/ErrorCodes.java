@@ -8,6 +8,8 @@ import org.example.mindlab.global.exception.MindLabException;
 @AllArgsConstructor
 public enum ErrorCodes {
 
+    INVALID_IMAGE_EXTENSION(ErrorStatus.BAD_REQUEST, "이미지 확장자가 올바르지 않습니다.", 1),
+
     PASSWORD_MISMATCH(ErrorStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다.", 1),
     TOKEN_EXPIRED(ErrorStatus.UNAUTHORIZED, "토큰이 만료되었습니다.", 2),
     INVALID_TOKEN(ErrorStatus.UNAUTHORIZED, "유효하지 않은 토큰 입니다.", 3),
