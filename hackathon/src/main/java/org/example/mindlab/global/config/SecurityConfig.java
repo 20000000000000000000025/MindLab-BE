@@ -15,6 +15,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static org.example.mindlab.global.authentication.type.Role.USER;
+
 @EnableWebSecurity
 @Configuration
 @RequiredArgsConstructor
@@ -30,9 +32,7 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/posts/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name()) // todo 바꾸도록 하여라
-                .requestMatchers("/posts").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
-                .requestMatchers("/test/**").permitAll()
+                .requestMatchers("/summations/{summation-id}").hasRole(USER.name())
             )
             .addFilterBefore(exceptionFilter, UsernamePasswordAuthenticationFilter.class)
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

@@ -13,7 +13,7 @@ public class AuthenticatedUserProvider {
     private final AuthGrpcClient authGrpcClient;
 
     public Long getCurrentUserId() {
-        return Long.valueOf(SecurityContextHolder.getContext().getAuthentication().getName()); // todo authentication 에 userId가 꼭 있어야함
+        return Long.valueOf(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
     public AuthenticatedUser getAuthenticatedUser() {
