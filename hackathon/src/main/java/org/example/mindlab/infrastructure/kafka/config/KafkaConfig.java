@@ -23,8 +23,6 @@ public class KafkaConfig {
     public ConsumerFactory<String, Object> consumerFactory(ObjectMapper objectMapper) {
         JsonDeserializer<Object> jsonDeserializer = new JsonDeserializer<>(objectMapper);
         jsonDeserializer.addTrustedPackages(
-            "org.example.stortiessearch.infrastructure.mq.consumer",
-            "org.example.stortiessearch.application.event",
             "*"
         );
 
