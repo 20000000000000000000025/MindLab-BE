@@ -26,6 +26,4 @@ public class Summation {
   private String problem;
 
   private String feedback;
-
-
 }
