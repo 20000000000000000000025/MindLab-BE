@@ -10,8 +10,6 @@ import org.example.mindlab.global.authentication.AuthenticatedUserProvider;
 import org.example.mindlab.infrastructure.cache.service.GetViewCountService;
 import org.example.mindlab.infrastructure.kafka.event.viewcount.IncreasePostViewEvent;
 import org.example.mindlab.infrastructure.kafka.event.viewcount.IncreasePostViewProducer;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import java.util.List;
 
@@ -31,21 +29,22 @@ public class QuerySummationUseCase {
 
     private final AuthenticatedUserProvider authenticatedUserProvider;
 
-    public QuerySummationDetailsResponse execute(Long id, Pageable pageable) {
+    public QuerySummationDetailsResponse execute(Long id) {
         Summation summation = summationRepository.findById(id)
-            .orElseThrow(SUMMATION_NOT_FOUND::throwException);
+                .orElseThrow(SUMMATION_NOT_FOUND::throwException);
 
-        Page<Subject> subjectPage = querySubjectRepository.querySubjectsBySummationIdWithPaging(id, pageable);
+        List<String> subjects = querySubjectRepository.querySubjectBySummationId(id)
+                .stream().map(Subject :: getName).toList();
 
         Long userId = authenticatedUserProvider.getCurrentUserId();
 
         increasePostViewProducer.publish(IncreasePostViewEvent.builder()
-            .postId(id)
-            .userId(userId)
-            .build());
+                .postId(id)
+                .userId(userId)
+                .build());
 
         Long viewCount = getViewCountService.getViewCounts(List.of(id)).get(id);
 
-        return QuerySummationDetailsResponse.of(summation, subjectPage, viewCount);
+        return QuerySummationDetailsResponse.of(summation, subjects, viewCount);
     }
 }

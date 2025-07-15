@@ -3,6 +3,8 @@ package org.example.mindlab.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.mindlab.application.usecase.QuerySummationUseCase;
 import org.example.mindlab.application.usecase.dto.response.QuerySummationDetailsResponse;
+import org.example.mindlab.domain.summation.QuerySummationService;
+import org.example.mindlab.domain.summation.Summation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -14,14 +16,19 @@ import org.springframework.web.bind.annotation.*;
 public class SummationController {
 
     private final QuerySummationUseCase querySummationUseCase;
+    private final QuerySummationService querySummationService;
 
     @GetMapping("/{summation-id}")
-    public QuerySummationDetailsResponse getSummationDetails(
-            @PathVariable Long id,
+    public QuerySummationDetailsResponse querySummation(@PathVariable("summation-id") Long id) {
+        return querySummationUseCase.execute(id);
+    }
+
+    @GetMapping
+    public Page<Summation> queryAllSummation(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "15") int size
     ) {
         Pageable pageable = PageRequest.of(page, size);
-        return querySummationUseCase.execute(id, pageable);
+        return querySummationService.execute(pageable);
     }
 }
