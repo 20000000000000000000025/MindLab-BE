@@ -18,4 +18,10 @@ public class QuerySubjectRepository {
                 .where(subject.summation.id.eq(id))
                 .fetch();
     }
+
+    public List<Subject> getAllSubjects() {
+        return queryFactory.selectFrom(subject)
+            .distinct()
+            .fetch();
+    }
 }

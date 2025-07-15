@@ -30,7 +30,7 @@ public class SecurityConfig {
         return http
             .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
+            .authorizeHttpRequests(auth -> auth      
                     .requestMatchers("/summations/**").permitAll()
                     .requestMatchers("/summations/{summation-id}").hasRole(USER.name())
                     .anyRequest().denyAll()

@@ -1,7 +1,9 @@
 package org.example.mindlab.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.mindlab.application.usecase.QueryAllSubjectsUseCase;
 import org.example.mindlab.application.usecase.QuerySummationUseCase;
+import org.example.mindlab.application.usecase.dto.response.QueryAllSubjectsResponse;
 import org.example.mindlab.application.usecase.dto.response.QuerySummationDetailsResponse;
 import org.example.mindlab.domain.summation.QuerySummationService;
 import org.example.mindlab.domain.summation.dto.response.QuerySummationResponse;
@@ -17,6 +19,8 @@ public class SummationController {
     private final QuerySummationUseCase querySummationUseCase;
     private final QuerySummationService querySummationService;
 
+    private final QueryAllSubjectsUseCase queryAllSubjectsUseCase;
+
     @GetMapping("/{summation-id}")
     public QuerySummationDetailsResponse querySummation(@PathVariable("summation-id") Long id) {
         return querySummationUseCase.execute(id);
@@ -29,5 +33,10 @@ public class SummationController {
     ) {
         Pageable pageable = PageRequest.of(page, size);
         return querySummationService.execute(pageable);
+    }
+  
+    @GetMapping("/subjects")
+    public QueryAllSubjectsResponse queryAllSubjects() {
+        return queryAllSubjectsUseCase.execute();
     }
 }
