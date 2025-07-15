@@ -18,7 +18,7 @@ public enum ErrorCodes {
     POST_UPDATE_FORBIDDEN(ErrorStatus.FORBIDDEN, "수정 권한이 없습니다.", 1),
 
     USER_NOT_FOUND(ErrorStatus.NOT_FOUND, "유저를 찾지 못했습니다.", 1),
-    POST_NOT_FOUND(ErrorStatus.NOT_FOUND, "게시물을 찾지 못했습니다.", 2),
+    SUMMATION_NOT_FOUND(ErrorStatus.NOT_FOUND, "요약본을 찾지 못했습니다.", 2),
 
     EMAIL_ALREADY_EXIST(ErrorStatus.CONFLICT, "이메일이 중복됩니다.", 1),
     ALREADY_LIKED(ErrorStatus.CONFLICT, "이미 좋아요를 눌렀습니다.", 2),

@@ -2,7 +2,6 @@ package org.example.mindlab.global.config;
 
 import lombok.RequiredArgsConstructor;
 import org.example.mindlab.global.authentication.JwtAuthenticationFilter;
-import org.example.mindlab.global.authentication.type.Role;
 import org.example.mindlab.global.exception.ExceptionFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +13,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import static org.example.mindlab.global.authentication.type.Role.USER;
 
 @EnableWebSecurity
 @Configuration
@@ -30,9 +31,9 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/posts/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name()) // todo 바꾸도록 하여라
-                .requestMatchers("/posts").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
-                .requestMatchers("/test/**").permitAll()
+                .requestMatchers("/summations/subjects", "/summations/subjects/**").permitAll()
+                .requestMatchers("/summations/{summation-id}").hasRole(USER.name())
+                .anyRequest().denyAll()
             )
             .addFilterBefore(exceptionFilter, UsernamePasswordAuthenticationFilter.class)
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
