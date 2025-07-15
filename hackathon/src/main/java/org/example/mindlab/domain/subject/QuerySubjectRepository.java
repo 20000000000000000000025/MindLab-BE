@@ -15,8 +15,8 @@ public class QuerySubjectRepository {
 
     public List<Subject> querySubjectBySummationId(Long id) {
         return queryFactory.selectFrom(subject)
-            .where(subject.summation.id.eq(id))
-            .fetch();
+                .where(subject.summation.id.eq(id))
+                .fetch();
     }
 
     public List<Subject> getAllSubjects() {

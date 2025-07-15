@@ -31,17 +31,17 @@ public class QuerySummationUseCase {
 
     public QuerySummationDetailsResponse execute(Long id) {
         Summation summation = summationRepository.findById(id)
-            .orElseThrow(SUMMATION_NOT_FOUND::throwException);
+                .orElseThrow(SUMMATION_NOT_FOUND::throwException);
 
         List<String> subjects = querySubjectRepository.querySubjectBySummationId(id)
-            .stream().map(Subject :: getName).toList();
+                .stream().map(Subject :: getName).toList();
 
         Long userId = authenticatedUserProvider.getCurrentUserId();
 
         increasePostViewProducer.publish(IncreasePostViewEvent.builder()
-            .postId(id)
-            .userId(userId)
-            .build());
+                .postId(id)
+                .userId(userId)
+                .build());
 
         Long viewCount = getViewCountService.getViewCounts(List.of(id)).get(id);
 

@@ -30,10 +30,10 @@ public class SecurityConfig {
         return http
             .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/summations/subjects", "/summations/subjects/**").permitAll()
-                .requestMatchers("/summations/{summation-id}").hasRole(USER.name())
-                .anyRequest().denyAll()
+            .authorizeHttpRequests(auth -> auth      
+                    .requestMatchers("/summations/**").permitAll()
+                    .requestMatchers("/summations/{summation-id}").hasRole(USER.name())
+                    .anyRequest().denyAll()
             )
             .addFilterBefore(exceptionFilter, UsernamePasswordAuthenticationFilter.class)
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
