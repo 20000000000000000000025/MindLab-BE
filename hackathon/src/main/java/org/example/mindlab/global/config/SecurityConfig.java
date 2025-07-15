@@ -2,7 +2,6 @@ package org.example.mindlab.global.config;
 
 import lombok.RequiredArgsConstructor;
 import org.example.mindlab.global.authentication.JwtAuthenticationFilter;
-import org.example.mindlab.global.authentication.type.Role;
 import org.example.mindlab.global.exception.ExceptionFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,7 +31,7 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/summations").permitAll()
+                    .requestMatchers("/summations/**").permitAll()
                     .requestMatchers("/summations/{summation-id}").hasRole(USER.name())
                     .anyRequest().denyAll()
             )

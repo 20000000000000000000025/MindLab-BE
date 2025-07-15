@@ -4,8 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.mindlab.application.usecase.QuerySummationUseCase;
 import org.example.mindlab.application.usecase.dto.response.QuerySummationDetailsResponse;
 import org.example.mindlab.domain.summation.QuerySummationService;
-import org.example.mindlab.domain.summation.Summation;
-import org.springframework.data.domain.Page;
+import org.example.mindlab.domain.summation.dto.response.QuerySummationResponse;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +23,7 @@ public class SummationController {
     }
 
     @GetMapping
-    public Page<Summation> queryAllSummation(
+    public QuerySummationResponse queryAllSummation(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "15") int size
     ) {
