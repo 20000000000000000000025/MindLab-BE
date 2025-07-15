@@ -7,7 +7,7 @@ import org.example.mindlab.domain.summation.Summation;
 
 @Data
 @Builder
-public class QuerySummationResponse {
+public class QuerySummationDetailsResponse {
 
     private Long id;
 
@@ -23,8 +23,8 @@ public class QuerySummationResponse {
 
     private Long viewCount;
 
-    public static QuerySummationResponse of(Summation summation, List<String> subjects, Long viewCount) {
-        return QuerySummationResponse.builder()
+    public static QuerySummationDetailsResponse of(Summation summation, List<String> subjects, Long viewCount) {
+        return QuerySummationDetailsResponse.builder()
             .id(summation.getId())
             .title(summation.getTitle())
             .content(summation.getContent())
