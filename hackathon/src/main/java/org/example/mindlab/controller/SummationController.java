@@ -2,6 +2,7 @@ package org.example.mindlab.controller;
 
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import org.example.mindlab.application.usecase.CreateSummationUseCase;
 import org.example.mindlab.application.usecase.QueryAllSubjectsUseCase;
 import org.example.mindlab.application.usecase.QuerySummationUseCase;
 import org.example.mindlab.application.usecase.dto.response.QueryAllSubjectsResponse;
@@ -23,6 +24,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
+
+import static org.example.mindlab.global.exception.error.ErrorCodes.ALREADY_LIKED;
 
 @RequiredArgsConstructor
 @RestController
@@ -44,6 +48,8 @@ public class SummationController {
     private final SummationRepository summationRepository;
 
     private final QueryLikeRepository queryLikeRepository;
+
+    private final CreateSummationUseCase createSummationUseCase;
 
     @GetMapping("/{summation-id}")
     public QuerySummationDetailsResponse querySummation(@PathVariable("summation-id") Long id) {
@@ -129,7 +135,9 @@ public class SummationController {
         Summation summation = summationRepository.findById(summationId).orElseThrow(ErrorCodes.SUMMATION_NOT_FOUND::throwException);
 
         // 중복 좋아요 체크
-        likeRepository.findByUserIdAndSummation(userId, summation);
+        if (likeRepository.findByUserIdAndSummation(userId, summation).isPresent()) {
+            throw ALREADY_LIKED.throwException();
+        }
 
         likeRepository.save(Like.builder()
             .userId(userId)
@@ -149,4 +157,8 @@ public class SummationController {
         likeRepository.deleteById(id);
     }
 
+    @PostMapping("/image")
+    public void createSummation(@RequestPart("file") MultipartFile file) {
+        createSummationUseCase.execute(file);
+    }
 }
