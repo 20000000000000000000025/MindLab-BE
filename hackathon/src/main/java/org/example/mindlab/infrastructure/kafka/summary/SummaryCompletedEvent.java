@@ -9,7 +9,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SummaryCreateEvent {
+public class SummaryCompletedEvent {
 
     private Long subjectId;
+    private String title;
+    private String summary;
+    private String question;
 }

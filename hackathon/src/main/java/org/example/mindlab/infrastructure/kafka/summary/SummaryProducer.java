@@ -10,9 +10,9 @@ public class SummaryProducer {
 
     private final KafkaTemplate<String, SummaryCreateEvent> kafkaTemplate;
 
-    public void send(String postId) {
+    public void send(Long subjectId) {
         SummaryCreateEvent event = SummaryCreateEvent.builder()
-                .postId(postId)
+                .subjectId(subjectId)
                 .build();
         kafkaTemplate.send("summary_create", event);
     }
