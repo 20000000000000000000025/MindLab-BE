@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SummaryCreateEvent {
 
-    private Long subjectId;
+    private Long summaryId;
 }

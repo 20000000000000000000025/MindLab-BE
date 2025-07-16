@@ -11,8 +11,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SummaryCompletedEvent {
 
-    private Long subjectId;
-    private String title;
-    private String summary;
-    private String question;
+    private Long summaryId;
 }
