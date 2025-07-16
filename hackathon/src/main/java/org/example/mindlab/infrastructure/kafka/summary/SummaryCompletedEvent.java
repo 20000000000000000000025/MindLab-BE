@@ -1,0 +1,18 @@
+package org.example.mindlab.infrastructure.kafka.summary;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class SummaryCompletedEvent {
+
+    private Long subjectId;
+    private String title;
+    private String summary;
+    private String question;
+}
