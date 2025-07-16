@@ -34,7 +34,7 @@ public class QuerySummationUseCase {
                 .orElseThrow(SUMMATION_NOT_FOUND::throwException);
 
         List<String> subjects = querySubjectRepository.querySubjectBySummationId(id)
-                .stream().map(Subject :: getName).toList();
+                .stream().map(Subject::getName).toList();
 
         Long userId = authenticatedUserProvider.getCurrentUserId();
 
