@@ -1,5 +1,6 @@
 package org.example.mindlab.domain.summation;
 
+import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import org.example.mindlab.domain.summation.dto.response.QuerySummationResponse;
 import org.example.mindlab.domain.summation.repository.QuerySummationRepository;
@@ -18,9 +19,10 @@ public class QuerySummationService {
     private final QuerySummationRepository querySummationRepository;
     private final GetViewCountService getViewCountService;
 
-    public QuerySummationResponse execute(Pageable pageable) {
+    public QuerySummationResponse execute(Pageable pageable, String tags, String searchTerm) {
 
-        Page<Summation> page = querySummationRepository.querySummationsWithPaging(pageable);
+        Page<Summation> page = querySummationRepository
+            .querySummationsWithPaging(pageable, tags, searchTerm);
 
         List<Long> ids = page.getContent().stream()
                 .map(Summation::getId)

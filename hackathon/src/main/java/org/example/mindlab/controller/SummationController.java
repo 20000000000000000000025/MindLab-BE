@@ -29,10 +29,12 @@ public class SummationController {
     @GetMapping
     public QuerySummationResponse queryAllSummation(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "15") int size
+            @RequestParam(defaultValue = "15") int size,
+            @RequestParam(defaultValue = "") String tags,
+            @RequestParam(defaultValue = "", name = "search-term") String searchTerm
     ) {
         Pageable pageable = PageRequest.of(page, size);
-        return querySummationService.execute(pageable);
+        return querySummationService.execute(pageable, tags, searchTerm);
     }
   
     @GetMapping("/subjects")
