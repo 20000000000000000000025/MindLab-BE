@@ -1,6 +1,5 @@
 package org.example.mindlab.domain.summation;
 
-import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import org.example.mindlab.domain.summation.dto.response.QuerySummationResponse;
 import org.example.mindlab.domain.summation.repository.QuerySummationRepository;

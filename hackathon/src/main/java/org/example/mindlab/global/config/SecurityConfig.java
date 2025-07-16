@@ -33,6 +33,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth      
                     .requestMatchers("/summations/subjects").permitAll()
                     .requestMatchers("/summations").permitAll()
+                    .requestMatchers("/summations/like/**").hasRole(USER.name())
                     .requestMatchers("/summations/{summation-id}").hasRole(USER.name())
                     .anyRequest().denyAll()
             )

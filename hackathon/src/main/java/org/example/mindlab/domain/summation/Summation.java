@@ -19,6 +19,9 @@ public class Summation {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(name = "user_id")
+  private Long userId;
+
   private String title;
 
   private String content;
