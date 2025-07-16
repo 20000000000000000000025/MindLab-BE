@@ -40,7 +40,7 @@ public class QuerySummationRepository {
         }
 
         List<Summation> summations = queryFactory.selectFrom(summation)
-            .join(subject).on(subject.summation.id.eq(summation.id))
+            .leftJoin(subject).on(subject.summation.id.eq(summation.id))
             .where(builder)
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
@@ -48,12 +48,13 @@ public class QuerySummationRepository {
             .fetch();
 
         long total = queryFactory.selectFrom(summation)
-            .join(subject).on(subject.summation.id.eq(summation.id))
+            .leftJoin(subject).on(subject.summation.id.eq(summation.id))
             .where(builder)
             .fetchCount();
 
         return new PageImpl<>(summations, pageable, total);
     }
+
 
     public Page<Summation> queryLikedSummationsWithPaging(Pageable pageable, String tags,
                                                           String searchTerm, Long userId) {
@@ -92,7 +93,7 @@ public class QuerySummationRepository {
     }
 
     public Page<Summation> queryMySummationsWithPaging(Pageable pageable, String tags,
-                                                          String searchTerm, Long userId) {
+                                                       String searchTerm, Long userId) {
         BooleanBuilder builder = new BooleanBuilder();
         // tags 처리
         if (tags != null && !tags.isBlank()) {
@@ -109,15 +110,15 @@ public class QuerySummationRepository {
         }
 
         List<Summation> summations = queryFactory.selectFrom(summation)
-            .join(subject).on(subject.summation.id.eq(summation.id))
-            .where(builder.and(summation.id.eq(userId))) // todo userId 비교하는거로 변경하기(현재 id로 비교)
+            .leftJoin(subject).on(subject.summation.id.eq(summation.id))
+            .where(builder.and(summation.userId.eq(userId))) // todo userId 비교하는거로 변경하기(현재 id로 비교)
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .distinct()
             .fetch();
 
         long total =  queryFactory.selectFrom(summation)
-            .join(subject).on(subject.summation.id.eq(summation.id))
+            .leftJoin(subject).on(subject.summation.id.eq(summation.id))
             .where(builder.and(summation.id.eq(userId)))
             .fetchCount();
 
