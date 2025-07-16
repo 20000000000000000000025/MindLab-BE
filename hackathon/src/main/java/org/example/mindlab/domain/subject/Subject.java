@@ -2,6 +2,7 @@ package org.example.mindlab.domain.subject;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import org.example.mindlab.domain.summation.Summation;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Subject {
 
   @Id

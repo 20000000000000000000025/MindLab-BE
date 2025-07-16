@@ -19,7 +19,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class RestClient {
+public class AIRestClient {
 
   private static final String AI_URL = "https://mindlab-ai.onrender.com/ocr";
   //private static final String AI_URL = "http://192.168.1.14:8080/ocr";

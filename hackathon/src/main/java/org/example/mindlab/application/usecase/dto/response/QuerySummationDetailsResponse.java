@@ -25,7 +25,10 @@ public class QuerySummationDetailsResponse {
 
     private Long viewCount;
 
-    public static QuerySummationDetailsResponse of(Summation summation, List<String> subjects, Long viewCount) {
+    private Long likeCount;
+
+    public static QuerySummationDetailsResponse of(Summation summation, List<String> subjects,
+                                                   Long viewCount, Long likeCount) {
         return QuerySummationDetailsResponse.builder()
                 .id(summation.getId())
                 .title(summation.getTitle())
@@ -34,6 +37,7 @@ public class QuerySummationDetailsResponse {
                 .feedback(summation.getFeedback())
                 .subjects(subjects)
                 .viewCount(viewCount)
+                .likeCount(likeCount)
                 .build();
     }
 }

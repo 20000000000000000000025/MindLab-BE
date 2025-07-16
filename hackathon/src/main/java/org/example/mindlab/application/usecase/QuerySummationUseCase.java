@@ -2,6 +2,8 @@ package org.example.mindlab.application.usecase;
 
 import lombok.RequiredArgsConstructor;
 import org.example.mindlab.application.usecase.dto.response.QuerySummationDetailsResponse;
+import org.example.mindlab.domain.like.QueryLikeRepository;
+import org.example.mindlab.domain.like.repository.LikeRepository;
 import org.example.mindlab.domain.subject.QuerySubjectRepository;
 import org.example.mindlab.domain.subject.Subject;
 import org.example.mindlab.domain.summation.Summation;
@@ -29,6 +31,8 @@ public class QuerySummationUseCase {
 
     private final AuthenticatedUserProvider authenticatedUserProvider;
 
+    private final QueryLikeRepository queryLikeRepository;
+
     public QuerySummationDetailsResponse execute(Long id) {
         Summation summation = summationRepository.findById(id)
                 .orElseThrow(SUMMATION_NOT_FOUND::throwException);
@@ -44,7 +48,8 @@ public class QuerySummationUseCase {
                 .build());
 
         Long viewCount = getViewCountService.getViewCounts(List.of(id)).get(id);
+        Long likeCount = queryLikeRepository.getLikeCountsByPostsId(List.of(id)).get(0);
 
-        return QuerySummationDetailsResponse.of(summation, subjects, viewCount);
+        return QuerySummationDetailsResponse.of(summation, subjects, viewCount, likeCount);
     }
 }
